@@ -239,6 +239,23 @@
             font-size: 0.92rem;
         }
 
+        .sound-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .test-sound-btn {
+            padding: 10px 14px;
+            background: var(--accent-yellow);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
         .wallpaper-options {
             display: flex;
             gap: 10px;
@@ -335,7 +352,7 @@
             <button class="action-btn" id="btn-pi" style="background: #059669;" onclick="piDonate()">تبرع ومساعدة (Pi)</button>
         </div>
 
-        <!-- الإعدادات: اللغات، الخلفيات، والإضاءة -->
+        <!-- الإعدادات: اللغات، الأصوات، الخلفيات، والإضاءة -->
         <div class="section-card" id="sec-settings">
             <h3 id="txt-settings-title">⚙️ الإعدادات والتخصيص</h3>
             
@@ -348,6 +365,20 @@
                     <option value="fr">Français (الفرنسية)</option>
                     <option value="es">Español (الإسبانية)</option>
                 </select>
+            </div>
+
+            <!-- اختيار نغمة التنبيه -->
+            <div class="setting-row">
+                <label id="lbl-sound" for="soundSelect">🔔 نغمة تنبيه الطوارئ (Alert Sound):</label>
+                <div class="sound-controls">
+                    <select id="soundSelect" class="select-box">
+                        <option value="siren" id="opt-siren">صفارة إنذار قوية (Siren)</option>
+                        <option value="beep" id="opt-beep">جرس تنبيه سريع (Fast Beep)</option>
+                        <option value="chime" id="opt-chime">نغمة تنبيه هادئة (Soft Tone)</option>
+                        <option value="mute" id="opt-mute">صامت (Mute)</option>
+                    </select>
+                    <button class="test-sound-btn" id="btn-test-sound" onclick="playAlarmSound()">🔊 تجربة</button>
+                </div>
             </div>
 
             <!-- اختيار الخلفية -->
@@ -397,6 +428,12 @@
                 piBtn: "تبرع ومساعدة (Pi)",
                 settingsTitle: "⚙️ الإعدادات والتخصيص",
                 lblLang: "🌐 لغة التطبيق (Language):",
+                lblSound: "🔔 نغمة تنبيه الطوارئ (Alert Sound):",
+                optSiren: "صفارة إنذار قوية (Siren)",
+                optBeep: "جرس تنبيه سريع (Fast Beep)",
+                optChime: "نغمة تنبيه هادئة (Soft Tone)",
+                optMute: "صامت (Mute)",
+                btnTestSound: "🔊 تجربة",
                 lblWp: "🎨 خلفية الشاشة (Wallpaper):",
                 themeBtn: "🌙 تبديل وضع الإضاءة (ليلي / صبحي)",
                 navHome: "الرئيسية",
@@ -422,6 +459,12 @@
                 piBtn: "Donate & Help (Pi)",
                 settingsTitle: "⚙️ Settings & Customization",
                 lblLang: "🌐 App Language:",
+                lblSound: "🔔 Emergency Alert Sound:",
+                optSiren: "Loud Siren",
+                optBeep: "Fast Beep",
+                optChime: "Soft Tone",
+                optMute: "Mute",
+                btnTestSound: "🔊 Test",
                 lblWp: "🎨 Screen Wallpaper:",
                 themeBtn: "🌙 Toggle Dark / Light Mode",
                 navHome: "Home",
@@ -447,6 +490,12 @@
                 piBtn: "Faire un don (Pi)",
                 settingsTitle: "⚙️ Paramètres",
                 lblLang: "🌐 Langue :",
+                lblSound: "🔔 Son d'alerte :",
+                optSiren: "Sirène forte",
+                optBeep: "Bip rapide",
+                optChime: "Son doux",
+                optMute: "Muet",
+                btnTestSound: "🔊 Tester",
                 lblWp: "🎨 Fond d'écran :",
                 themeBtn: "🌙 Mode Sombre / Clair",
                 navHome: "Accueil",
@@ -472,6 +521,12 @@
                 piBtn: "Donar y Ayudar (Pi)",
                 settingsTitle: "⚙️ Configuración",
                 lblLang: "🌐 Idioma:",
+                lblSound: "🔔 Sonido de alerta:",
+                optSiren: "Sirena fuerte",
+                optBeep: "Pitido rápido",
+                optChime: "Tono suave",
+                optMute: "Silencio",
+                btnTestSound: "🔊 Probar",
                 lblWp: "🎨 Fondo de pantalla:",
                 themeBtn: "🌙 Modo Oscuro / Claro",
                 navHome: "Inicio",
@@ -503,6 +558,12 @@
             document.getElementById("btn-pi").innerText = t.piBtn;
             document.getElementById("txt-settings-title").innerText = t.settingsTitle;
             document.getElementById("lbl-lang").innerText = t.lblLang;
+            document.getElementById("lbl-sound").innerText = t.lblSound;
+            document.getElementById("opt-siren").innerText = t.optSiren;
+            document.getElementById("opt-beep").innerText = t.optBeep;
+            document.getElementById("opt-chime").innerText = t.optChime;
+            document.getElementById("opt-mute").innerText = t.optMute;
+            document.getElementById("btn-test-sound").innerText = t.btnTestSound;
             document.getElementById("lbl-wp").innerText = t.lblWp;
             document.getElementById("btn-theme").innerText = t.themeBtn;
             document.getElementById("nav-home").innerText = t.navHome;
@@ -518,24 +579,64 @@
             currentLevel = document.getElementById('btn-' + lvl).innerText;
         }
 
-        // دالة تشغيل صفارة الإنذار والتنبيه الصوتي
+        // دالة تشغيل الأصوات حسب اختيار المستخدم
         function playAlarmSound() {
+            const soundType = document.getElementById("soundSelect").value;
+            if (soundType === "mute") return;
+
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.6);
-                gain.gain.setValueAtTime(1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.6);
+
+                if (soundType === "siren") {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.7);
+                    gain.gain.setValueAtTime(1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.7);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.7);
+                } else if (soundType === "beep") {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (soundType === "chime") {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.5);
+                    gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.5);
+                }
             } catch (e) {
                 console.log("Audio not supported");
             }
+        }
+
+        // نغمة خفيفة لإشعارات الدردشة
+        function playChatPop() {
+            const soundType = document.getElementById("soundSelect").value;
+            if (soundType === "mute") return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } catch (e) {}
         }
 
         function triggerSOS() {
@@ -567,6 +668,7 @@
                 chat.innerHTML += `<p><b>أنت:</b> ${input.value}</p>`;
                 input.value = "";
                 chat.scrollTop = chat.scrollHeight;
+                playChatPop();
             }
         }
 
