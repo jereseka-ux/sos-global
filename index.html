@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -297,7 +296,7 @@
             <div class="pi-badge" id="piUser">Pi User</div>
         </header>
 
-        <!-- كارد الطوارئ -->
+        <!-- كارد الطوارئ مع التنبيه الصوتي -->
         <div class="sos-card" id="sosCard">
             <h2 id="txt-sos-title" style="font-size: 1.15rem;">مركز الاستغاثة الفوري</h2>
             <button class="sos-btn" onclick="triggerSOS()">SOS</button>
@@ -519,8 +518,29 @@
             currentLevel = document.getElementById('btn-' + lvl).innerText;
         }
 
+        // دالة تشغيل صفارة الإنذار والتنبيه الصوتي
+        function playAlarmSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.6);
+                gain.gain.setValueAtTime(1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.6);
+            } catch (e) {
+                console.log("Audio not supported");
+            }
+        }
+
         function triggerSOS() {
-            alert(`⚠️ SOS (${currentLevel})\nتم إرسال إشارة الاستغاثة وتحديد موقعك عبر الأقمار الصناعية بنجاح!`);
+            playAlarmSound();
+            alert(`⚠️ SOS (${currentLevel})\nتم إطلاق صفارة الإنذار وإرسال إشارة الاستغاثة وتحديد موقعك عبر الأقمار الصناعية بنجاح!`);
         }
 
         function getLocation() {
