@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOS Global - أنقذني شكرًا</title>
+    <!-- مكتبة Pi Network SDK الرسمية -->
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <!-- ملف التهيئة المدمج (Manifest) لتثبيت التطبيق على الموبايل -->
     <link rel="manifest" href='data:application/manifest+json,{"name":"SOS Global","short_name":"SOS","start_url":".","display":"standalone","background_color":"#f0f9ff","theme_color":"#0284c7"}'>
     <style>
@@ -94,6 +96,7 @@
             font-size: 0.78rem;
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            cursor: pointer;
         }
 
         .sos-card {
@@ -312,7 +315,7 @@
                 <h1>SOS Global</h1>
                 <p id="txt-subtitle">أنقذني شكرًا | Help me please</p>
             </div>
-            <div class="pi-badge" id="piUser">Pi User</div>
+            <div class="pi-badge" id="piUser" onclick="initPiAuth()" title="اضغط لتسجيل الدخول بـ Pi">Pi User</div>
         </header>
 
         <!-- كارد الطوارئ والتنبيه الصوتي -->
@@ -408,6 +411,12 @@
     </div>
 
     <script>
+        // تهيئة Pi SDK
+        const Pi = window.Pi;
+        if (Pi) {
+            Pi.init({ version: "2.0", sandbox: true });
+        }
+
         let currentLevel = "شدة قصوى";
         let currentLang = "ar";
 
@@ -625,83 +634,4 @@
             const soundType = document.getElementById("soundSelect").value;
             if (soundType === "mute") return;
             try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.15);
-            } catch (e) {}
-        }
-
-        function triggerSOS() {
-            playAlarmSound();
-            alert(`⚠️ SOS (${currentLevel})\nتم إطلاق صفارة الإنذار وإرسال إشارة الاستغاثة وتحديد موقعك عبر الأقمار الصناعية بنجاح!`);
-        }
-
-        function getLocation() {
-            const status = document.getElementById("locationStatus");
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    status.innerHTML = `Lat: ${position.coords.latitude.toFixed(5)} | Lng: ${position.coords.longitude.toFixed(5)}`;
-                }, () => {
-                    status.innerHTML = "يرجى تفعيل GPS في الهاتف لتحديد الموقع بدقة.";
-                });
-            } else {
-                status.innerHTML = "المتصفح لا يدعم تحديد الموقع.";
-            }
-        }
-
-        function handleKey(event) {
-            if (event.key === 'Enter') sendMsg();
-        }
-
-        function sendMsg() {
-            const input = document.getElementById("userInput");
-            if (input.value.trim() !== "") {
-                const chat = document.getElementById("chatMessages");
-                chat.innerHTML += `<p><b>أنت:</b> ${input.value}</p>`;
-                input.value = "";
-                chat.scrollTop = chat.scrollHeight;
-                playChatPop();
-            }
-        }
-
-        function setWallpaper(wp) {
-            document.body.setAttribute("data-theme", "light");
-            if (wp === 'default') {
-                document.body.removeAttribute("data-wallpaper");
-            } else {
-                document.body.setAttribute("data-wallpaper", wp);
-            }
-        }
-
-        function toggleTheme() {
-            const body = document.body;
-            body.removeAttribute("data-wallpaper");
-            if (body.getAttribute("data-theme") === "light") {
-                body.setAttribute("data-theme", "dark");
-            } else {
-                body.setAttribute("data-theme", "light");
-            }
-        }
-
-        function piDonate() {
-            alert("جاري الاتصال بـ Pi SDK لتأكيد عملية الدعم داخل شبكة باي...");
-        }
-
-        function scrollToSec(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        window.onload = function() {
-            getLocation();
-        };
-    </script>
-</body>
-</html>
+                const audio
