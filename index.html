@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOS Global - أنقذني شكرًا</title>
+    <!-- ملف التهيئة المدمج (Manifest) لتثبيت التطبيق على الموبايل -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"SOS Global","short_name":"SOS","start_url":".","display":"standalone","background_color":"#f0f9ff","theme_color":"#0284c7"}'>
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -313,7 +315,7 @@
             <div class="pi-badge" id="piUser">Pi User</div>
         </header>
 
-        <!-- كارد الطوارئ مع التنبيه الصوتي -->
+        <!-- كارد الطوارئ والتنبيه الصوتي -->
         <div class="sos-card" id="sosCard">
             <h2 id="txt-sos-title" style="font-size: 1.15rem;">مركز الاستغاثة الفوري</h2>
             <button class="sos-btn" onclick="triggerSOS()">SOS</button>
@@ -579,7 +581,6 @@
             currentLevel = document.getElementById('btn-' + lvl).innerText;
         }
 
-        // دالة تشغيل الأصوات حسب اختيار المستخدم
         function playAlarmSound() {
             const soundType = document.getElementById("soundSelect").value;
             if (soundType === "mute") return;
@@ -620,7 +621,6 @@
             }
         }
 
-        // نغمة خفيفة لإشعارات الدردشة
         function playChatPop() {
             const soundType = document.getElementById("soundSelect").value;
             if (soundType === "mute") return;
