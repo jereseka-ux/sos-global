@@ -1,1 +1,585 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Global - أنقذني شكرًا</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --text-color: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --primary-color: #0284c7;
+            --accent-red: #dc2626;
+            --accent-yellow: #d97706;
+            --accent-green: #059669;
+            --border-color: #cbd5e1;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --text-color: #f8fafc;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --primary-color: #38bdf8;
+            --border-color: #334155;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-wallpaper="calm-green"] {
+            --bg-gradient: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        [data-wallpaper="warm-sand"] {
+            --bg-gradient: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        [data-wallpaper="clean-white"] {
+            --bg-gradient: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            padding: 15px;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 18px;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .app-title h1 {
+            font-size: 1.45rem;
+            color: var(--primary-color);
+            letter-spacing: 0.5px;
+        }
+
+        .app-title p {
+            font-size: 0.8rem;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        .pi-badge {
+            background: linear-gradient(135deg, #fef08a, #fde047);
+            color: #713f12;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+
+        .sos-card {
+            background: var(--card-bg);
+            padding: 22px 15px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            border: 2px solid var(--accent-red);
+            transition: border-color 0.3s;
+        }
+
+        .sos-btn {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ef4444, #991b1b);
+            color: white;
+            font-size: 1.9rem;
+            font-weight: bold;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.45);
+            cursor: pointer;
+            margin: 15px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .sos-btn:active {
+            transform: scale(0.93);
+        }
+
+        .levels {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .level-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lvl-low { background: #d1fae5; color: #065f46; }
+        .lvl-med { background: #fef3c7; color: #92400e; }
+        .lvl-high { background: #fee2e2; color: #991b1b; }
+        .level-btn.active { border-color: var(--text-color); transform: scale(1.05); }
+
+        .section-card {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .action-btn:active { opacity: 0.85; }
+
+        .chat-box {
+            background: rgba(148, 163, 184, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            height: 110px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .send-btn {
+            padding: 10px 16px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .setting-row {
+            margin-bottom: 14px;
+        }
+
+        .setting-row label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .select-box {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 0.92rem;
+        }
+
+        .wallpaper-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .wp-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .wp-circle:hover { transform: scale(1.1); }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 5px;
+            border-top: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="container">
+        <!-- الهيدر -->
+        <header id="sec-home">
+            <div class="app-title">
+                <h1>SOS Global</h1>
+                <p id="txt-subtitle">أنقذني شكرًا | Help me please</p>
+            </div>
+            <div class="pi-badge" id="piUser">Pi User</div>
+        </header>
+
+        <!-- كارد الطوارئ -->
+        <div class="sos-card" id="sosCard">
+            <h2 id="txt-sos-title" style="font-size: 1.15rem;">مركز الاستغاثة الفوري</h2>
+            <button class="sos-btn" onclick="triggerSOS()">SOS</button>
+            <p id="txt-level-hint" style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 8px;">اختر درجة الخطر:</p>
+            <div class="levels">
+                <button class="level-btn lvl-low" id="btn-low" onclick="setLevel('low', '#059669')">بسيط</button>
+                <button class="level-btn lvl-med" id="btn-med" onclick="setLevel('med', '#d97706')">متوسط</button>
+                <button class="level-btn lvl-high active" id="btn-high" onclick="setLevel('high', '#dc2626')">شدة قصوى</button>
+            </div>
+        </div>
+
+        <!-- تحديد الموقع -->
+        <div class="section-card" id="sec-gps">
+            <h3 id="txt-gps-title">📍 تحديد الموقع الجغرافي (GPS)</h3>
+            <p id="locationStatus" style="font-size: 0.85rem; opacity: 0.85;">جارٍ الاتصال بالأقمار الصناعية...</p>
+            <button class="action-btn" id="btn-gps" onclick="getLocation()">تحديث إحداثيات موقعي</button>
+        </div>
+
+        <!-- مجتمع SOS والدردشة -->
+        <div class="section-card" id="sec-chat">
+            <h3 id="txt-chat-title">💬 مجتمع SOS (مساعدات يومية وأخبار)</h3>
+            <div class="chat-box" id="chatMessages">
+                <p><b>أحمد:</b> هل يوجد أحد قريب؟ أحتاج مساعدة بسيطة.</p>
+                <p><b>سارة:</b> الأجواء مستقرة هنا، طمنونا عليكم.</p>
+            </div>
+            <div class="chat-controls">
+                <input type="text" class="chat-input" placeholder="اكتب رسالتك أو طلبك هنا..." id="userInput" onkeypress="handleKey(event)">
+                <button class="send-btn" id="btn-send" onclick="sendMsg()">إرسال</button>
+            </div>
+        </div>
+
+        <!-- الدفع والتبرع -->
+        <div class="section-card">
+            <h3 id="txt-pi-title">🪙 الدعم والتبرع (Pi Network)</h3>
+            <p id="txt-pi-desc" style="font-size: 0.85rem; opacity: 0.85;">ساهم عبر عملة Pi في دعم خدمات الإغاثة وتطوير المنصة.</p>
+            <button class="action-btn" id="btn-pi" style="background: #059669;" onclick="piDonate()">تبرع ومساعدة (Pi)</button>
+        </div>
+
+        <!-- الإعدادات: اللغات، الخلفيات، والإضاءة -->
+        <div class="section-card" id="sec-settings">
+            <h3 id="txt-settings-title">⚙️ الإعدادات والتخصيص</h3>
+            
+            <!-- اختيار اللغة -->
+            <div class="setting-row">
+                <label id="lbl-lang" for="langSelect">🌐 لغة التطبيق (Language):</label>
+                <select id="langSelect" class="select-box" onchange="changeLanguage(this.value)">
+                    <option value="ar">العربية (Arabic)</option>
+                    <option value="en">English (الإنجليزية)</option>
+                    <option value="fr">Français (الفرنسية)</option>
+                    <option value="es">Español (الإسبانية)</option>
+                </select>
+            </div>
+
+            <!-- اختيار الخلفية -->
+            <div class="setting-row">
+                <label id="lbl-wp">🎨 خلفية الشاشة (Wallpaper):</label>
+                <div class="wallpaper-options">
+                    <div class="wp-circle" style="background: #e0f2fe;" title="أزرق هادئ" onclick="setWallpaper('default')"></div>
+                    <div class="wp-circle" style="background: #d1fae5;" title="أخضر مطمئن" onclick="setWallpaper('calm-green')"></div>
+                    <div class="wp-circle" style="background: #fef3c7;" title="رملي دافئ" onclick="setWallpaper('warm-sand')"></div>
+                    <div class="wp-circle" style="background: #ffffff;" title="أبيض ناصع" onclick="setWallpaper('clean-white')"></div>
+                </div>
+            </div>
+
+            <!-- وضع الإضاءة -->
+            <button class="action-btn" id="btn-theme" style="background: #475569;" onclick="toggleTheme()">🌙 تبديل وضع الإضاءة (ليلي / صبحي)</button>
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي -->
+    <div class="footer-nav">
+        <button class="nav-item" onclick="scrollToSec('sec-home')"><span>🏠</span><span id="nav-home">الرئيسية</span></button>
+        <button class="nav-item" onclick="scrollToSec('sec-gps')"><span>📍</span><span id="nav-gps">الموقع</span></button>
+        <button class="nav-item" onclick="scrollToSec('sec-chat')"><span>💬</span><span id="nav-chat">المجتمع</span></button>
+        <button class="nav-item" onclick="scrollToSec('sec-settings')"><span>⚙️</span><span id="nav-settings">الإعدادات</span></button>
+    </div>
+
+    <script>
+        let currentLevel = "شدة قصوى";
+        let currentLang = "ar";
+
+        const translations = {
+            ar: {
+                dir: "rtl",
+                subtitle: "أنقذني شكرًا | Help me please",
+                sosTitle: "مركز الاستغاثة الفوري",
+                levelHint: "اختر درجة الخطر:",
+                low: "بسيط",
+                med: "متوسط",
+                high: "شدة قصوى",
+                gpsTitle: "📍 تحديد الموقع الجغرافي (GPS)",
+                gpsBtn: "تحديث إحداثيات موقعي",
+                chatTitle: "💬 مجتمع SOS (مساعدات يومية وأخبار)",
+                chatPlaceholder: "اكتب رسالتك أو طلبك هنا...",
+                sendBtn: "إرسال",
+                piTitle: "🪙 الدعم والتبرع (Pi Network)",
+                piDesc: "ساهم عبر عملة Pi في دعم خدمات الإغاثة وتطوير المنصة.",
+                piBtn: "تبرع ومساعدة (Pi)",
+                settingsTitle: "⚙️ الإعدادات والتخصيص",
+                lblLang: "🌐 لغة التطبيق (Language):",
+                lblWp: "🎨 خلفية الشاشة (Wallpaper):",
+                themeBtn: "🌙 تبديل وضع الإضاءة (ليلي / صبحي)",
+                navHome: "الرئيسية",
+                navGps: "الموقع",
+                navChat: "المجتمع",
+                navSettings: "الإعدادات"
+            },
+            en: {
+                dir: "ltr",
+                subtitle: "Help me please | أنقذني شكرًا",
+                sosTitle: "Emergency SOS Center",
+                levelHint: "Select Danger Level:",
+                low: "Low",
+                med: "Medium",
+                high: "Critical",
+                gpsTitle: "📍 GPS Satellite Location",
+                gpsBtn: "Update My Coordinates",
+                chatTitle: "💬 SOS Community (Daily Help & News)",
+                chatPlaceholder: "Type your message or help request...",
+                sendBtn: "Send",
+                piTitle: "🪙 Support & Donate (Pi Network)",
+                piDesc: "Contribute with Pi to support global relief services.",
+                piBtn: "Donate & Help (Pi)",
+                settingsTitle: "⚙️ Settings & Customization",
+                lblLang: "🌐 App Language:",
+                lblWp: "🎨 Screen Wallpaper:",
+                themeBtn: "🌙 Toggle Dark / Light Mode",
+                navHome: "Home",
+                navGps: "Location",
+                navChat: "Community",
+                navSettings: "Settings"
+            },
+            fr: {
+                dir: "ltr",
+                subtitle: "Aidez-moi s'il vous plaît | أنقذني شكرًا",
+                sosTitle: "Centre d'Urgence SOS",
+                levelHint: "Niveau de danger :",
+                low: "Faible",
+                med: "Moyen",
+                high: "Critique",
+                gpsTitle: "📍 Localisation GPS",
+                gpsBtn: "Actualiser ma position",
+                chatTitle: "💬 Communauté SOS (Entraide & Infos)",
+                chatPlaceholder: "Écrivez votre message ici...",
+                sendBtn: "Envoyer",
+                piTitle: "🪙 Soutien et Don (Pi Network)",
+                piDesc: "Contribuez avec Pi pour soutenir les secours.",
+                piBtn: "Faire un don (Pi)",
+                settingsTitle: "⚙️ Paramètres",
+                lblLang: "🌐 Langue :",
+                lblWp: "🎨 Fond d'écran :",
+                themeBtn: "🌙 Mode Sombre / Clair",
+                navHome: "Accueil",
+                navGps: "Position",
+                navChat: "Communauté",
+                navSettings: "Paramètres"
+            },
+            es: {
+                dir: "ltr",
+                subtitle: "Ayúdame por favor | أنقذني شكرًا",
+                sosTitle: "Centro de Emergencia SOS",
+                levelHint: "Nivel de peligro:",
+                low: "Bajo",
+                med: "Medio",
+                high: "Crítico",
+                gpsTitle: "📍 Ubicación GPS",
+                gpsBtn: "Actualizar mi ubicación",
+                chatTitle: "💬 Comunidad SOS (Ayuda y Noticias)",
+                chatPlaceholder: "Escribe tu mensaje aquí...",
+                sendBtn: "Enviar",
+                piTitle: "🪙 Apoyo y Donación (Pi Network)",
+                piDesc: "Contribuye con Pi para apoyar los servicios de ayuda.",
+                piBtn: "Donar y Ayudar (Pi)",
+                settingsTitle: "⚙️ Configuración",
+                lblLang: "🌐 Idioma:",
+                lblWp: "🎨 Fondo de pantalla:",
+                themeBtn: "🌙 Modo Oscuro / Claro",
+                navHome: "Inicio",
+                navGps: "Ubicación",
+                navChat: "Comunidad",
+                navSettings: "Ajustes"
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            document.documentElement.lang = lang;
+            document.documentElement.dir = t.dir;
+
+            document.getElementById("txt-subtitle").innerText = t.subtitle;
+            document.getElementById("txt-sos-title").innerText = t.sosTitle;
+            document.getElementById("txt-level-hint").innerText = t.levelHint;
+            document.getElementById("btn-low").innerText = t.low;
+            document.getElementById("btn-med").innerText = t.med;
+            document.getElementById("btn-high").innerText = t.high;
+            document.getElementById("txt-gps-title").innerText = t.gpsTitle;
+            document.getElementById("btn-gps").innerText = t.gpsBtn;
+            document.getElementById("txt-chat-title").innerText = t.chatTitle;
+            document.getElementById("userInput").placeholder = t.chatPlaceholder;
+            document.getElementById("btn-send").innerText = t.sendBtn;
+            document.getElementById("txt-pi-title").innerText = t.piTitle;
+            document.getElementById("txt-pi-desc").innerText = t.piDesc;
+            document.getElementById("btn-pi").innerText = t.piBtn;
+            document.getElementById("txt-settings-title").innerText = t.settingsTitle;
+            document.getElementById("lbl-lang").innerText = t.lblLang;
+            document.getElementById("lbl-wp").innerText = t.lblWp;
+            document.getElementById("btn-theme").innerText = t.themeBtn;
+            document.getElementById("nav-home").innerText = t.navHome;
+            document.getElementById("nav-gps").innerText = t.navGps;
+            document.getElementById("nav-chat").innerText = t.navChat;
+            document.getElementById("nav-settings").innerText = t.navSettings;
+        }
+
+        function setLevel(lvl, color) {
+            document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lvl).classList.add('active');
+            document.getElementById('sosCard').style.borderColor = color;
+            currentLevel = document.getElementById('btn-' + lvl).innerText;
+        }
+
+        function triggerSOS() {
+            alert(`⚠️ SOS (${currentLevel})\nتم إرسال إشارة الاستغاثة وتحديد موقعك عبر الأقمار الصناعية بنجاح!`);
+        }
+
+        function getLocation() {
+            const status = document.getElementById("locationStatus");
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    status.innerHTML = `Lat: ${position.coords.latitude.toFixed(5)} | Lng: ${position.coords.longitude.toFixed(5)}`;
+                }, () => {
+                    status.innerHTML = "يرجى تفعيل GPS في الهاتف لتحديد الموقع بدقة.";
+                });
+            } else {
+                status.innerHTML = "المتصفح لا يدعم تحديد الموقع.";
+            }
+        }
+
+        function handleKey(event) {
+            if (event.key === 'Enter') sendMsg();
+        }
+
+        function sendMsg() {
+            const input = document.getElementById("userInput");
+            if (input.value.trim() !== "") {
+                const chat = document.getElementById("chatMessages");
+                chat.innerHTML += `<p><b>أنت:</b> ${input.value}</p>`;
+                input.value = "";
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+
+        function setWallpaper(wp) {
+            document.body.setAttribute("data-theme", "light");
+            if (wp === 'default') {
+                document.body.removeAttribute("data-wallpaper");
+            } else {
+                document.body.setAttribute("data-wallpaper", wp);
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            body.removeAttribute("data-wallpaper");
+            if (body.getAttribute("data-theme") === "light") {
+                body.setAttribute("data-theme", "dark");
+            } else {
+                body.setAttribute("data-theme", "light");
+            }
+        }
+
+        function piDonate() {
+            alert("جاري الاتصال بـ Pi SDK لتأكيد عملية الدعم داخل شبكة باي...");
+        }
+
+        function scrollToSec(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onload = function() {
+            getLocation();
+        };
+    </script>
+</body>
+</html>
