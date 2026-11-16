@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOS Global - أنقذني شكرًا</title>
-    <!-- مكتبة Pi Network SDK الرسمية -->
+    <title>SOS Global | أنقذني شكراً</title>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <!-- ملف التهيئة المدمج (Manifest) -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"SOS Global","short_name":"SOS","start_url":".","display":"standalone","background_color":"#f0f9ff","theme_color":"#0284c7"}'>
+    <link rel="manifest" href='data:application/manifest+json,{"name": "SOS Global", "short_name": "SOS", "start_url": "/", "display": "standalone", "background_color": "#ffffff", "theme_color": "#0284c7"}'>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
             --text-color: #1e293b;
             --card-bg: rgba(255, 255, 255, 0.92);
             --primary-color: #0284c7;
@@ -69,8 +67,8 @@
             justify-content: space-between;
             align-items: center;
             background: var(--card-bg);
-            padding: 15px 18px;
-            border-radius: 18px;
+            padding: 12px 16px;
+            border-radius: 14px;
             box-shadow: var(--shadow);
             margin-bottom: 16px;
             border: 1px solid var(--border-color);
@@ -162,7 +160,7 @@
 
         .section-card h3 {
             font-size: 1.05rem;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -210,7 +208,7 @@
             border-radius: 10px;
             background: var(--card-bg);
             color: var(--text-color);
-            font-size: 0.9rem;
+            font-size: 0.92rem;
         }
 
         .send-btn {
@@ -296,7 +294,7 @@
             background: none;
             border: none;
             color: var(--text-color);
-            font-size: 0.78rem;
+            font-size: 0.7rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -309,20 +307,20 @@
 <body data-theme="light">
 
     <div class="container">
-        <!-- الهيدر -->
+        <!-- الرئيسية -->
         <header id="sec-home">
             <div class="app-title">
                 <h1>SOS Global</h1>
-                <p id="txt-subtitle">أنقذني شكرًا | Help me please</p>
+                <p id="txt-subtitle">أنقذني شكراً | Help me please</p>
             </div>
             <div class="pi-badge" id="piUser" onclick="initPiAuth()" title="تسجيل الدخول بـ Pi">Pi User</div>
         </header>
 
-        <!-- كارد الطوارئ والتنبيه الصوتي -->
+        <!-- مركز الاستغاثة الفوري -->
         <div class="sos-card" id="sosCard">
             <h2 id="txt-sos-title" style="font-size: 1.15rem;">مركز الاستغاثة الفوري</h2>
             <button class="sos-btn" onclick="triggerSOS()">SOS</button>
-            <p id="txt-level-hint" style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 8px;">اختر درجة الخطر:</p>
+            <p id="txt-level-hint" style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 6px;">اختر درجة الخطر:</p>
             <div class="levels">
                 <button class="level-btn lvl-low" id="btn-low" onclick="setLevel('low', '#059669')">بسيط</button>
                 <button class="level-btn lvl-med" id="btn-med" onclick="setLevel('med', '#d97706')">متوسط</button>
@@ -333,16 +331,16 @@
         <!-- تحديد الموقع -->
         <div class="section-card" id="sec-gps">
             <h3 id="txt-gps-title">📍 تحديد الموقع الجغرافي (GPS)</h3>
-            <p id="locationStatus" style="font-size: 0.85rem; opacity: 0.85;">جارٍ الاتصال بالأقمار الصناعية...</p>
+            <p id="locationStatus" style="font-size: 0.85rem; opacity: 0.85; margin-bottom: 8px;">جارٍ الاتصال بالأقمار الصناعية...</p>
             <button class="action-btn" id="btn-gps" onclick="getLocation()">تحديث إحداثيات موقعي</button>
         </div>
 
-        <!-- مجتمع SOS والدردشة -->
+        <!-- المجتمع -->
         <div class="section-card" id="sec-chat">
-            <h3 id="txt-chat-title">💬 مجتمع SOS (مساعدات يومية وأخبار)</h3>
+            <h3 id="txt-chat-title">💬 مساعدات يومية وأخبار SOS مجتمع</h3>
             <div class="chat-box" id="chatMessages">
-                <p><b>أحمد:</b> هل يوجد أحد قريب؟ أحتاج مساعدة بسيطة.</p>
-                <p><b>سارة:</b> الأجواء مستقرة هنا، طمنونا عليكم.</p>
+                <p><b>أحمد:</b> هل يوجد أحد قريب؟ أحتاج مساعدة بسيطة</p>
+                <p><b>سارة:</b> الأجواء مستقرة هل شعرتنا بالهزات؟</p>
             </div>
             <div class="chat-controls">
                 <input type="text" class="chat-input" placeholder="اكتب رسالتك أو طلبك هنا..." id="userInput" onkeypress="handleKey(event)">
@@ -351,54 +349,52 @@
         </div>
 
         <!-- الدفع والتبرع -->
-        <div class="section-card">
+        <div class="section-card" id="sec-pi">
             <h3 id="txt-pi-title">🪙 الدعم والتبرع (Pi Network)</h3>
-            <p id="txt-pi-desc" style="font-size: 0.85rem; opacity: 0.85;">ساهم عبر عملة Pi في دعم خدمات الإغاثة وتطوير المنصة.</p>
+            <p id="txt-pi-desc" style="font-size: 0.85rem; opacity: 0.85; margin-bottom: 8px;">في دعم خدمات الإغاثة وتطوير المنصة Pi ساهم عبر عملة.</p>
             <button class="action-btn" id="btn-pi" style="background: #059669;" onclick="piDonate()">تبرع ومساعدة (Pi)</button>
         </div>
 
-        <!-- الإعدادات: اللغات، الأصوات، الخلفيات، والإضاءة -->
+        <!-- الإعدادات -->
         <div class="section-card" id="sec-settings">
             <h3 id="txt-settings-title">⚙️ الإعدادات والتخصيص</h3>
             
-            <!-- اختيار اللغة -->
             <div class="setting-row">
-                <label id="lbl-lang" for="langSelect">🌐 لغة التطبيق (Language):</label>
+                <label id="lbl-lang" for="langSelect">لغة التطبيق (Language):</label>
                 <select id="langSelect" class="select-box" onchange="changeLanguage(this.value)">
                     <option value="ar">العربية (Arabic)</option>
-                    <option value="en">English (الإنجليزية)</option>
-                    <option value="fr">Français (الفرنسية)</option>
-                    <option value="es">Español (الإسبانية)</option>
+                    <option value="en">English (إنجليزي)</option>
+                    <option value="fr">Français (فرنسية)</option>
+                    <option value="es">Español (إسبانية)</option>
                 </select>
             </div>
 
-            <!-- اختيار نغمة التنبيه -->
             <div class="setting-row">
-                <label id="lbl-sound" for="soundSelect">🔔 نغمة تنبيه الطوارئ (Alert Sound):</label>
+                <label id="lbl-sound" for="soundSelect">نغمة تنبيه الطوارئ (Alert Sound):</label>
                 <div class="sound-controls">
                     <select id="soundSelect" class="select-box">
-                        <option value="siren" id="opt-siren">صفارة إنذار قوية (Siren)</option>
-                        <option value="beep" id="opt-beep">جرس تنبيه سريع (Fast Beep)</option>
-                        <option value="chime" id="opt-chime">نغمة تنبيه هادئة (Soft Tone)</option>
-                        <option value="mute" id="opt-mute">صامت (Mute)</option>
+                        <option value="siren">صفارة إنذار (Siren)</option>
+                        <option value="beep">جرس تنبيه سريع (Fast Beep)</option>
+                        <option value="chime">نغمة تنبيه هادئة (Soft Tone)</option>
+                        <option value="mute">صمت (Mute)</option>
                     </select>
-                    <button class="test-sound-btn" id="btn-test-sound" onclick="playAlarmSound()">🔊 تجربة</button>
+                    <button class="test-sound-btn" id="btn-test-sound" onclick="testSound()">تجربة</button>
                 </div>
             </div>
 
-            <!-- اختيار الخلفية -->
             <div class="setting-row">
-                <label id="lbl-wp">🎨 خلفية الشاشة (Wallpaper):</label>
+                <label id="lbl-wp">خلفية الشاشة:</label>
                 <div class="wallpaper-options">
-                    <div class="wp-circle" style="background: #e0f2fe;" title="أزرق هادئ" onclick="setWallpaper('default')"></div>
-                    <div class="wp-circle" style="background: #d1fae5;" title="أخضر مطمئن" onclick="setWallpaper('calm-green')"></div>
-                    <div class="wp-circle" style="background: #fef3c7;" title="رملي دافئ" onclick="setWallpaper('warm-sand')"></div>
-                    <div class="wp-circle" style="background: #ffffff;" title="أبيض ناصع" onclick="setWallpaper('clean-white')"></div>
+                    <div class="wp-circle" style="background: #e0f2fe;" onclick="setWallpaper('default')" title="افتراضي"></div>
+                    <div class="wp-circle" style="background: #d1fae5;" onclick="setWallpaper('calm-green')" title="أخضر هادئ"></div>
+                    <div class="wp-circle" style="background: #fef3c7;" onclick="setWallpaper('warm-sand')" title="رمال دافئة"></div>
+                    <div class="wp-circle" style="background: #ffffff;" onclick="setWallpaper('clean-white')" title="أبيض ناصع"></div>
                 </div>
             </div>
 
-            <!-- وضع الإضاءة -->
-            <button class="action-btn" id="btn-theme" style="background: #475569;" onclick="toggleTheme()">🌙 تبديل وضع الإضاءة (ليلي / صبحي)</button>
+            <div class="setting-row" style="margin-top: 15px;">
+                <button class="action-btn" id="btn-theme" onclick="toggleTheme()" style="background: #475569;">تبديل وضع الإضاءة (ليلي / ضوئي)</button>
+            </div>
         </div>
     </div>
 
@@ -411,7 +407,6 @@
     </div>
 
     <script>
-        // تهيئة Pi SDK بأمان تام
         let Pi = window.Pi;
         try {
             if (Pi) {
@@ -426,8 +421,7 @@
 
         const translations = {
             ar: {
-                dir: "rtl",
-                subtitle: "أنقذني شكرًا | Help me please",
+                subtitle: "أنقذني شكراً | Help me please",
                 sosTitle: "مركز الاستغاثة الفوري",
                 levelHint: "اختر درجة الخطر:",
                 low: "بسيط",
@@ -435,30 +429,29 @@
                 high: "شدة قصوى",
                 gpsTitle: "📍 تحديد الموقع الجغرافي (GPS)",
                 gpsBtn: "تحديث إحداثيات موقعي",
-                chatTitle: "💬 مجتمع SOS (مساعدات يومية وأخبار)",
+                chatTitle: "💬 مساعدات يومية وأخبار SOS مجتمع",
                 chatPlaceholder: "اكتب رسالتك أو طلبك هنا...",
                 sendBtn: "إرسال",
                 piTitle: "🪙 الدعم والتبرع (Pi Network)",
-                piDesc: "ساهم عبر عملة Pi في دعم خدمات الإغاثة وتطوير المنصة.",
+                piDesc: "في دعم خدمات الإغاثة وتطوير المنصة Pi ساهم عبر عملة.",
                 piBtn: "تبرع ومساعدة (Pi)",
-                settingsTitle: "⚙️ الإعدادات والتخصيص",
-                lblLang: "🌐 لغة التطبيق (Language):",
-                lblSound: "🔔 نغمة تنبيه الطوارئ (Alert Sound):",
-                optSiren: "صفارة إنذار قوية (Siren)",
+                settingTitle: "⚙️ الإعدادات والتخصيص",
+                lblLang: "لغة التطبيق (Language):",
+                lblSound: "نغمة تنبيه الطوارئ (Alert Sound):",
+                optSiren: "صفارة إنذار (Siren)",
                 optBeep: "جرس تنبيه سريع (Fast Beep)",
                 optChime: "نغمة تنبيه هادئة (Soft Tone)",
-                optMute: "صامت (Mute)",
-                btnTestSound: "🔊 تجربة",
-                lblWp: "🎨 خلفية الشاشة (Wallpaper):",
-                themeBtn: "🌙 تبديل وضع الإضاءة (ليلي / صبحي)",
+                optMute: "صمت (Mute)",
+                btnTestSound: "تجربة",
+                lblWp: "خلفية الشاشة:",
+                themeBtn: "تبديل وضع الإضاءة (ليلي / ضوئي)",
                 navHome: "الرئيسية",
                 navGps: "الموقع",
                 navChat: "المجتمع",
                 navSettings: "الإعدادات"
             },
             en: {
-                dir: "ltr",
-                subtitle: "Help me please | أنقذني شكرًا",
+                subtitle: "Help me please | انقذني شكرا",
                 sosTitle: "Emergency SOS Center",
                 levelHint: "Select Danger Level:",
                 low: "Low",
@@ -472,24 +465,23 @@
                 piTitle: "🪙 Support & Donate (Pi Network)",
                 piDesc: "Contribute with Pi to support global relief services.",
                 piBtn: "Donate & Help (Pi)",
-                settingsTitle: "⚙️ Settings & Customization",
-                lblLang: "🌐 App Language:",
-                lblSound: "🔔 Emergency Alert Sound:",
+                settingTitle: "⚙️ Settings & Customization",
+                lblLang: "App Language:",
+                lblSound: "Emergency Alert Sound:",
                 optSiren: "Loud Siren",
                 optBeep: "Fast Beep",
                 optChime: "Soft Tone",
                 optMute: "Mute",
-                btnTestSound: "🔊 Test",
-                lblWp: "🎨 Screen Wallpaper:",
-                themeBtn: "🌙 Toggle Dark / Light Mode",
+                btnTestSound: "Test",
+                lblWp: "Screen Wallpaper:",
+                themeBtn: "Toggle Dark / Light Mode",
                 navHome: "Home",
                 navGps: "Location",
                 navChat: "Community",
                 navSettings: "Settings"
             },
             fr: {
-                dir: "ltr",
-                subtitle: "Aidez-moi s'il vous plaît | أنقذني شكرًا",
+                subtitle: "Aidez-moi s'il vous plaît | انقذني شكرا",
                 sosTitle: "Centre d'Urgence SOS",
                 levelHint: "Niveau de danger :",
                 low: "Faible",
@@ -503,26 +495,25 @@
                 piTitle: "🪙 Soutien et Don (Pi Network)",
                 piDesc: "Contribuez avec Pi pour soutenir les secours.",
                 piBtn: "Faire un don (Pi)",
-                settingsTitle: "⚙️ Paramètres",
-                lblLang: "🌐 Langue :",
-                lblSound: "🔔 Son d'alerte :",
+                settingTitle: "⚙️ Paramètres",
+                lblLang: "Langue :",
+                lblSound: "Son d'alerte :",
                 optSiren: "Sirène forte",
                 optBeep: "Bip rapide",
-                optChime: "Son doux",
+                optChime: "Tono doux",
                 optMute: "Muet",
-                btnTestSound: "🔊 Tester",
-                lblWp: "🎨 Fond d'écran :",
-                themeBtn: "🌙 Mode Sombre / Clair",
+                btnTestSound: "Tester",
+                lblWp: "Fond d'écran :",
+                themeBtn: "Mode Sombre / Clair",
                 navHome: "Accueil",
                 navGps: "Position",
                 navChat: "Communauté",
                 navSettings: "Paramètres"
             },
             es: {
-                dir: "ltr",
-                subtitle: "Ayúdame por favor | أنقذني شكرًا",
+                subtitle: "Ayúdame por favor | انقذني شكرا",
                 sosTitle: "Centro de Emergencia SOS",
-                levelHint: "Nivel de peligro:",
+                levelHint: "Nivel de peligro :",
                 low: "Bajo",
                 med: "Medio",
                 high: "Crítico",
@@ -534,16 +525,16 @@
                 piTitle: "🪙 Apoyo y Donación (Pi Network)",
                 piDesc: "Contribuye con Pi para apoyar los servicios de ayuda.",
                 piBtn: "Donar y Ayudar (Pi)",
-                settingsTitle: "⚙️ Configuración",
-                lblLang: "🌐 Idioma:",
-                lblSound: "🔔 Sonido de alerta:",
+                settingTitle: "⚙️ Configuración",
+                lblLang: "Idioma :",
+                lblSound: "Sonido de alerta :",
                 optSiren: "Sirena fuerte",
                 optBeep: "Pitido rápido",
                 optChime: "Tono suave",
                 optMute: "Silencio",
-                btnTestSound: "🔊 Probar",
-                lblWp: "🎨 Fondo de pantalla:",
-                themeBtn: "🌙 Modo Oscuro / Claro",
+                btnTestSound: "Probar",
+                lblWp: "Fondo de pantalla :",
+                themeBtn: "Modo Oscuro / Claro",
                 navHome: "Inicio",
                 navGps: "Ubicación",
                 navChat: "Comunidad",
@@ -555,7 +546,7 @@
             currentLang = lang;
             const t = translations[lang];
             document.documentElement.lang = lang;
-            document.documentElement.dir = t.dir;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
 
             document.getElementById("txt-subtitle").innerText = t.subtitle;
             document.getElementById("txt-sos-title").innerText = t.sosTitle;
@@ -571,13 +562,9 @@
             document.getElementById("txt-pi-title").innerText = t.piTitle;
             document.getElementById("txt-pi-desc").innerText = t.piDesc;
             document.getElementById("btn-pi").innerText = t.piBtn;
-            document.getElementById("txt-settings-title").innerText = t.settingsTitle;
+            document.getElementById("txt-settings-title").innerText = t.settingTitle;
             document.getElementById("lbl-lang").innerText = t.lblLang;
             document.getElementById("lbl-sound").innerText = t.lblSound;
-            document.getElementById("opt-siren").innerText = t.optSiren;
-            document.getElementById("opt-beep").innerText = t.optBeep;
-            document.getElementById("opt-chime").innerText = t.optChime;
-            document.getElementById("opt-mute").innerText = t.optMute;
             document.getElementById("btn-test-sound").innerText = t.btnTestSound;
             document.getElementById("lbl-wp").innerText = t.lblWp;
             document.getElementById("btn-theme").innerText = t.themeBtn;
@@ -618,14 +605,13 @@
                 } else if (soundType === "beep") {
                     osc.type = 'square';
                     osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
                     osc.start();
                     osc.stop(audioCtx.currentTime + 0.3);
                 } else if (soundType === "chime") {
                     osc.type = 'sine';
                     osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.5);
                     gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
                     osc.start();
@@ -636,27 +622,13 @@
             }
         }
 
-        function playChatPop() {
-            const soundSelect = document.getElementById("soundSelect");
-            if (!soundSelect || soundSelect.value === "mute") return;
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.15);
-            } catch (e) {}
+        function testSound() {
+            playAlarmSound();
         }
 
         function triggerSOS() {
             playAlarmSound();
-            alert(`⚠️ SOS (${currentLevel})\nتم إطلاق صفارة الإنذار وإرسال إشارة الاستغاثة وتحديد موقعك عبر الأقمار الصناعية بنجاح!`);
+            alert(`🚨 SOS تم إطلاق صفارة الإنذار وإرسال إشارة الاستغاثة وتحديد موقعك عبر الأقمار الصناعية بنجاح!`);
         }
 
         function getLocation() {
@@ -665,10 +637,10 @@
                 navigator.geolocation.getCurrentPosition((position) => {
                     status.innerHTML = `Lat: ${position.coords.latitude.toFixed(5)} | Lng: ${position.coords.longitude.toFixed(5)}`;
                 }, () => {
-                    status.innerHTML = "يرجى تفعيل GPS في الهاتف لتحديد الموقع بدقة.";
+                    status.innerHTML = "❌ تم رفض تحديد الموقع بدقة GPS يرجى تفعيل الهاتف.";
                 });
             } else {
-                status.innerHTML = "المتصفح لا يدعم تحديد الموقع.";
+                status.innerHTML = "❌ المتصفح لا يدعم تحديد الموقع";
             }
         }
 
@@ -680,15 +652,13 @@
             const input = document.getElementById("userInput");
             if (input && input.value.trim() !== "") {
                 const chat = document.getElementById("chatMessages");
-                chat.innerHTML += `<p><b>أنت:</b> ${input.value}</p>`;
+                chat.innerHTML += `<p><b>أنا:</b> ${input.value}</p>`;
                 input.value = "";
                 chat.scrollTop = chat.scrollHeight;
-                playChatPop();
             }
         }
 
         function setWallpaper(wp) {
-            document.body.setAttribute("data-theme", "light");
             if (wp === 'default') {
                 document.body.removeAttribute("data-wallpaper");
             } else {
@@ -698,7 +668,6 @@
 
         function toggleTheme() {
             const body = document.body;
-            body.removeAttribute("data-wallpaper");
             if (body.getAttribute("data-theme") === "light") {
                 body.setAttribute("data-theme", "dark");
             } else {
@@ -706,38 +675,58 @@
             }
         }
 
+        // جلب اسم المستخدم وتحديث الشارة تلقائياً عند فتح التطبيق
         async function initPiAuth() {
             try {
-                if (!window.Pi) {
-                    alert("يتم فتح التطبيق داخل متصفح Pi Browser الرسمي لتسجيل الدخول.");
-                    return;
+                if (!window.Pi) return;
+                const auth = await window.Pi.authenticate(['username', 'payments'], function(payment) {});
+                if (auth && auth.user && auth.user.username) {
+                    const userBadge = document.getElementById("piUser");
+                    if (userBadge) {
+                        userBadge.innerText = auth.user.username;
+                    }
                 }
-                const authResult = await window.Pi.authenticate(['username', 'payments'], function(payment) {});
-                document.getElementById("piUser").innerText = authResult.user.username;
-                alert("مرحباً بكِ يا " + authResult.user.username + "!");
             } catch (err) {
-                alert("يرجى فتح التطبيق من خلال Pi Browser.");
+                console.log("Auth error");
             }
         }
 
+        // تعديل دالة الدفع لإرسال الـ approve فوراً ومنع انتهاء الوقت (Payment Expired)
         async function piDonate() {
             try {
                 if (!window.Pi) {
-                    alert("يرجى فتح التطبيق عبر متصفح Pi Browser لتفعيل الدفع.");
+                    alert("لتفعيل الدفع يرجى فتح التطبيق عبر متصفح Pi Browser.");
                     return;
                 }
+
                 window.Pi.createPayment({
                     amount: 1.0,
                     memo: "SOS Global Support",
                     metadata: { type: "donation" },
                 }, {
-                    onReadyForServerApproval: (id) => {},
-                    onReadyForServerCompletion: (id, txid) => { alert("تم التبرع بنجاح عبر شبكة Pi!"); },
-                    onCancel: (id) => {},
-                    onError: (err) => { alert("خطأ في الدفع"); }
+                    onReadyForServerApproval: function(paymentId) {
+                        fetch('/api/approve', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ paymentId: paymentId })
+                        }).catch(err => console.error(err));
+                    },
+                    onReadyForServerCompletion: function(paymentId, txid) {
+                        fetch('/api/complete', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ paymentId: paymentId, txid: txid })
+                        }).then(res => {
+                            if (res.ok) alert("🎉 تم الدفع بنجاح عبر شبكة Pi! شكراً لدعمك.");
+                        }).catch(err => console.error(err));
+                    },
+                    onCancel: function(paymentId) {},
+                    onError: function(error, payment) {
+                        alert("خطأ في الدفع: " + (error ? error.message : "unknown"));
+                    }
                 });
             } catch (e) {
-                alert("يتطلب استخدام Pi Browser للتبرع.");
+                alert("التبرع يتطلب Pi Browser.");
             }
         }
 
@@ -748,7 +737,8 @@
 
         window.onload = function() {
             getLocation();
+            initPiAuth();
         };
     </script>
 </body>
-</html> 
+</html>
